@@ -154,7 +154,16 @@ public class ReplicationSink {
         batch(table, rows.get(table));
       }
       this.metrics.setAgeOfLastAppliedOp(
-          entries[entries.length-1].getKey().getWriteTime());
+              entries[entries.length-1].getKey().getWriteTime());
+      // +-+-+-+-+-+-+ BEGIN OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
+      
+      // @author: Alvaro Garcia -> Take received timestamp.
+              //long now = System.currentTimeMillis();
+              System.out.println("*** Latest update for table " + entries[entries.length - 1].getKey().getTablename() + "received at timestamp" + entries[entries.length-1].getKey().getWriteTime() + " ***\n");
+  
+      // +-+-+-+-+-+-+   END OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
+
+      
       this.metrics.appliedBatchesRate.inc(1);
       LOG.info("Total replicated: " + totalReplicated);
     } catch (IOException ex) {

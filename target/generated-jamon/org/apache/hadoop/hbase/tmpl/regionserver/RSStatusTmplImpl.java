@@ -36,17 +36,17 @@ public class RSStatusTmplImpl
 
 {
   private final HRegionServer regionServer;
-  private final String filter;
   private final String format;
+  private final String filter;
   protected static org.apache.hadoop.hbase.tmpl.regionserver.RSStatusTmpl.ImplData __jamon_setOptionalArguments(org.apache.hadoop.hbase.tmpl.regionserver.RSStatusTmpl.ImplData p_implData)
   {
-    if(! p_implData.getFilter__IsNotDefault())
-    {
-      p_implData.setFilter("general");
-    }
     if(! p_implData.getFormat__IsNotDefault())
     {
       p_implData.setFormat("html");
+    }
+    if(! p_implData.getFilter__IsNotDefault())
+    {
+      p_implData.setFilter("general");
     }
     return p_implData;
   }
@@ -54,8 +54,8 @@ public class RSStatusTmplImpl
   {
     super(p_templateManager, __jamon_setOptionalArguments(p_implData));
     regionServer = p_implData.getRegionServer();
-    filter = p_implData.getFilter();
     format = p_implData.getFormat();
+    filter = p_implData.getFilter();
   }
   
   public void renderNoFlush(@SuppressWarnings({"unused","hiding"}) final java.io.Writer jamonWriter)

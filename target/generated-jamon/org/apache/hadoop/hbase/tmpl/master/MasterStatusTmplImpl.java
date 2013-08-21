@@ -39,27 +39,31 @@ public class MasterStatusTmplImpl
 {
   private final HMaster master;
   private final HBaseAdmin admin;
+  private final Map<String,Integer> frags;
   private final ServerName metaLocation;
-  private final String format;
   private final ServerName rootLocation;
+  private final String filter;
   private final Set<ServerName> deadServers;
   private final boolean showAppendWarning;
-  private final String filter;
   private final List<ServerName> servers;
-  private final Map<String,Integer> frags;
+  private final String format;
   protected static org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl.ImplData __jamon_setOptionalArguments(org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl.ImplData p_implData)
   {
+    if(! p_implData.getFrags__IsNotDefault())
+    {
+      p_implData.setFrags(null);
+    }
     if(! p_implData.getMetaLocation__IsNotDefault())
     {
       p_implData.setMetaLocation(null);
     }
-    if(! p_implData.getFormat__IsNotDefault())
-    {
-      p_implData.setFormat("html");
-    }
     if(! p_implData.getRootLocation__IsNotDefault())
     {
       p_implData.setRootLocation(null);
+    }
+    if(! p_implData.getFilter__IsNotDefault())
+    {
+      p_implData.setFilter("general");
     }
     if(! p_implData.getDeadServers__IsNotDefault())
     {
@@ -69,17 +73,13 @@ public class MasterStatusTmplImpl
     {
       p_implData.setShowAppendWarning(false);
     }
-    if(! p_implData.getFilter__IsNotDefault())
-    {
-      p_implData.setFilter("general");
-    }
     if(! p_implData.getServers__IsNotDefault())
     {
       p_implData.setServers(null);
     }
-    if(! p_implData.getFrags__IsNotDefault())
+    if(! p_implData.getFormat__IsNotDefault())
     {
-      p_implData.setFrags(null);
+      p_implData.setFormat("html");
     }
     return p_implData;
   }
@@ -88,14 +88,14 @@ public class MasterStatusTmplImpl
     super(p_templateManager, __jamon_setOptionalArguments(p_implData));
     master = p_implData.getMaster();
     admin = p_implData.getAdmin();
+    frags = p_implData.getFrags();
     metaLocation = p_implData.getMetaLocation();
-    format = p_implData.getFormat();
     rootLocation = p_implData.getRootLocation();
+    filter = p_implData.getFilter();
     deadServers = p_implData.getDeadServers();
     showAppendWarning = p_implData.getShowAppendWarning();
-    filter = p_implData.getFilter();
     servers = p_implData.getServers();
-    frags = p_implData.getFrags();
+    format = p_implData.getFormat();
   }
   
   public void renderNoFlush(@SuppressWarnings({"unused","hiding"}) final java.io.Writer jamonWriter)

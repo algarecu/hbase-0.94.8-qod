@@ -3,6 +3,10 @@ package org.apache.hadoop.hbase.replication.regionserver;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+
+// For timestamps of the operation grouping
+import java.util.Date;
 
 public class HBaseQoD {
 
@@ -23,16 +27,23 @@ public class HBaseQoD {
     // update and maps K<> to expire with keys (string) of controlBounds
     private Map<String, K> controlBounds = Collections.synchronizedMap(new HashMap<String, K>());
 
+    // time control: <expiration time, containerId>
+    // private Map<Long, String> timeControlBounds = Collections.synchronizedMap(new TreeMap<Long, String>());
+
     public HBaseQoD() {
         // TODO Implement empty constructor
         // hardcoded bounds
-        final String tableName = "usertable";
+        final String tableName0 = "usertable0";
+        final String tableName1 = "usertable1";
+        final String tableName2 = "usertable2";
+
         final String columnFamily0 = "c0";
         final String columnFamily1 = "c1";
+        final String columnFamily2 = "c2";
 
-        maxBounds.put(tableName + SEPARATOR + columnFamily0, new K(-1, 50050, -1));
-        maxBounds.put(tableName + SEPARATOR + columnFamily1, new K(-1, 6, -1));
-
+        maxBounds.put(tableName0 + SEPARATOR + columnFamily0, new K(-1, 10, -1));
+        maxBounds.put(tableName1 + SEPARATOR + columnFamily1, new K(-1, 50, -1));
+        maxBounds.put(tableName2 + SEPARATOR + columnFamily2, new K(-1, 100, -1));
     }
 
     private Item getItem(String tableName, String columnId) {
@@ -78,7 +89,8 @@ public class HBaseQoD {
       	
         if (actualK.getSequence() >= maxK.getSequence()) {
             actualK.setSequence(0);
-            return true;
+            return true; 
+            // after this we return and propagate -> ReplicationSource.java
         }
       return false;
     }

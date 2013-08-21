@@ -13,9 +13,9 @@ import org.apache.hadoop.util.StringUtils;
 @org.jamon.annotations.Template(
   signature = "82BD81568AA42B0CFD47F9446183F197",
   optionalArguments = {
-    @org.jamon.annotations.Argument(name = "format", type = "String"),
     @org.jamon.annotations.Argument(name = "filter", type = "String"),
-    @org.jamon.annotations.Argument(name = "taskMonitor", type = "TaskMonitor")})
+    @org.jamon.annotations.Argument(name = "taskMonitor", type = "TaskMonitor"),
+    @org.jamon.annotations.Argument(name = "format", type = "String")})
 public class TaskMonitorTmpl
   extends org.jamon.AbstractTemplateProxy
 {
@@ -39,23 +39,6 @@ public class TaskMonitorTmpl
   public static class ImplData
     extends org.jamon.AbstractTemplateProxy.ImplData
   {
-    // 28, 1
-    public void setFormat(String format)
-    {
-      // 28, 1
-      m_format = format;
-      m_format__IsNotDefault = true;
-    }
-    public String getFormat()
-    {
-      return m_format;
-    }
-    private String m_format;
-    public boolean getFormat__IsNotDefault()
-    {
-      return m_format__IsNotDefault;
-    }
-    private boolean m_format__IsNotDefault;
     // 27, 1
     public void setFilter(String filter)
     {
@@ -90,6 +73,23 @@ public class TaskMonitorTmpl
       return m_taskMonitor__IsNotDefault;
     }
     private boolean m_taskMonitor__IsNotDefault;
+    // 28, 1
+    public void setFormat(String format)
+    {
+      // 28, 1
+      m_format = format;
+      m_format__IsNotDefault = true;
+    }
+    public String getFormat()
+    {
+      return m_format;
+    }
+    private String m_format;
+    public boolean getFormat__IsNotDefault()
+    {
+      return m_format__IsNotDefault;
+    }
+    private boolean m_format__IsNotDefault;
   }
   @Override
   protected ImplData makeImplData()
@@ -99,13 +99,6 @@ public class TaskMonitorTmpl
   @Override @SuppressWarnings("unchecked") public ImplData getImplData()
   {
     return (ImplData) super.getImplData();
-  }
-  
-  protected String format;
-  public final org.apache.hadoop.hbase.tmpl.common.TaskMonitorTmpl setFormat(String p_format)
-  {
-    (getImplData()).setFormat(p_format);
-    return this;
   }
   
   protected String filter;
@@ -119,6 +112,13 @@ public class TaskMonitorTmpl
   public final org.apache.hadoop.hbase.tmpl.common.TaskMonitorTmpl setTaskMonitor(TaskMonitor p_taskMonitor)
   {
     (getImplData()).setTaskMonitor(p_taskMonitor);
+    return this;
+  }
+  
+  protected String format;
+  public final org.apache.hadoop.hbase.tmpl.common.TaskMonitorTmpl setFormat(String p_format)
+  {
+    (getImplData()).setFormat(p_format);
     return this;
   }
   

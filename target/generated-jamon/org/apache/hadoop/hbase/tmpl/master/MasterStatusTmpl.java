@@ -38,14 +38,14 @@ import org.apache.hadoop.hbase.protobuf.generated.HBaseProtos.SnapshotDescriptio
     @org.jamon.annotations.Argument(name = "master", type = "HMaster"),
     @org.jamon.annotations.Argument(name = "admin", type = "HBaseAdmin")},
   optionalArguments = {
+    @org.jamon.annotations.Argument(name = "frags", type = "Map<String,Integer>"),
     @org.jamon.annotations.Argument(name = "metaLocation", type = "ServerName"),
-    @org.jamon.annotations.Argument(name = "format", type = "String"),
     @org.jamon.annotations.Argument(name = "rootLocation", type = "ServerName"),
+    @org.jamon.annotations.Argument(name = "filter", type = "String"),
     @org.jamon.annotations.Argument(name = "deadServers", type = "Set<ServerName>"),
     @org.jamon.annotations.Argument(name = "showAppendWarning", type = "boolean"),
-    @org.jamon.annotations.Argument(name = "filter", type = "String"),
     @org.jamon.annotations.Argument(name = "servers", type = "List<ServerName>"),
-    @org.jamon.annotations.Argument(name = "frags", type = "Map<String,Integer>")})
+    @org.jamon.annotations.Argument(name = "format", type = "String")})
 public class MasterStatusTmpl
   extends org.jamon.AbstractTemplateProxy
 {
@@ -91,6 +91,23 @@ public class MasterStatusTmpl
       return m_admin;
     }
     private HBaseAdmin m_admin;
+    // 23, 1
+    public void setFrags(Map<String,Integer> frags)
+    {
+      // 23, 1
+      m_frags = frags;
+      m_frags__IsNotDefault = true;
+    }
+    public Map<String,Integer> getFrags()
+    {
+      return m_frags;
+    }
+    private Map<String,Integer> m_frags;
+    public boolean getFrags__IsNotDefault()
+    {
+      return m_frags__IsNotDefault;
+    }
+    private boolean m_frags__IsNotDefault;
     // 25, 1
     public void setMetaLocation(ServerName metaLocation)
     {
@@ -108,23 +125,6 @@ public class MasterStatusTmpl
       return m_metaLocation__IsNotDefault;
     }
     private boolean m_metaLocation__IsNotDefault;
-    // 30, 1
-    public void setFormat(String format)
-    {
-      // 30, 1
-      m_format = format;
-      m_format__IsNotDefault = true;
-    }
-    public String getFormat()
-    {
-      return m_format;
-    }
-    private String m_format;
-    public boolean getFormat__IsNotDefault()
-    {
-      return m_format__IsNotDefault;
-    }
-    private boolean m_format__IsNotDefault;
     // 24, 1
     public void setRootLocation(ServerName rootLocation)
     {
@@ -142,6 +142,23 @@ public class MasterStatusTmpl
       return m_rootLocation__IsNotDefault;
     }
     private boolean m_rootLocation__IsNotDefault;
+    // 29, 1
+    public void setFilter(String filter)
+    {
+      // 29, 1
+      m_filter = filter;
+      m_filter__IsNotDefault = true;
+    }
+    public String getFilter()
+    {
+      return m_filter;
+    }
+    private String m_filter;
+    public boolean getFilter__IsNotDefault()
+    {
+      return m_filter__IsNotDefault;
+    }
+    private boolean m_filter__IsNotDefault;
     // 27, 1
     public void setDeadServers(Set<ServerName> deadServers)
     {
@@ -176,23 +193,6 @@ public class MasterStatusTmpl
       return m_showAppendWarning__IsNotDefault;
     }
     private boolean m_showAppendWarning__IsNotDefault;
-    // 29, 1
-    public void setFilter(String filter)
-    {
-      // 29, 1
-      m_filter = filter;
-      m_filter__IsNotDefault = true;
-    }
-    public String getFilter()
-    {
-      return m_filter;
-    }
-    private String m_filter;
-    public boolean getFilter__IsNotDefault()
-    {
-      return m_filter__IsNotDefault;
-    }
-    private boolean m_filter__IsNotDefault;
     // 26, 1
     public void setServers(List<ServerName> servers)
     {
@@ -210,23 +210,23 @@ public class MasterStatusTmpl
       return m_servers__IsNotDefault;
     }
     private boolean m_servers__IsNotDefault;
-    // 23, 1
-    public void setFrags(Map<String,Integer> frags)
+    // 30, 1
+    public void setFormat(String format)
     {
-      // 23, 1
-      m_frags = frags;
-      m_frags__IsNotDefault = true;
+      // 30, 1
+      m_format = format;
+      m_format__IsNotDefault = true;
     }
-    public Map<String,Integer> getFrags()
+    public String getFormat()
     {
-      return m_frags;
+      return m_format;
     }
-    private Map<String,Integer> m_frags;
-    public boolean getFrags__IsNotDefault()
+    private String m_format;
+    public boolean getFormat__IsNotDefault()
     {
-      return m_frags__IsNotDefault;
+      return m_format__IsNotDefault;
     }
-    private boolean m_frags__IsNotDefault;
+    private boolean m_format__IsNotDefault;
   }
   @Override
   protected ImplData makeImplData()
@@ -238,6 +238,13 @@ public class MasterStatusTmpl
     return (ImplData) super.getImplData();
   }
   
+  protected Map<String,Integer> frags;
+  public final org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl setFrags(Map<String,Integer> p_frags)
+  {
+    (getImplData()).setFrags(p_frags);
+    return this;
+  }
+  
   protected ServerName metaLocation;
   public final org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl setMetaLocation(ServerName p_metaLocation)
   {
@@ -245,17 +252,17 @@ public class MasterStatusTmpl
     return this;
   }
   
-  protected String format;
-  public final org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl setFormat(String p_format)
-  {
-    (getImplData()).setFormat(p_format);
-    return this;
-  }
-  
   protected ServerName rootLocation;
   public final org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl setRootLocation(ServerName p_rootLocation)
   {
     (getImplData()).setRootLocation(p_rootLocation);
+    return this;
+  }
+  
+  protected String filter;
+  public final org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl setFilter(String p_filter)
+  {
+    (getImplData()).setFilter(p_filter);
     return this;
   }
   
@@ -273,13 +280,6 @@ public class MasterStatusTmpl
     return this;
   }
   
-  protected String filter;
-  public final org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl setFilter(String p_filter)
-  {
-    (getImplData()).setFilter(p_filter);
-    return this;
-  }
-  
   protected List<ServerName> servers;
   public final org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl setServers(List<ServerName> p_servers)
   {
@@ -287,10 +287,10 @@ public class MasterStatusTmpl
     return this;
   }
   
-  protected Map<String,Integer> frags;
-  public final org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl setFrags(Map<String,Integer> p_frags)
+  protected String format;
+  public final org.apache.hadoop.hbase.tmpl.master.MasterStatusTmpl setFormat(String p_format)
   {
-    (getImplData()).setFrags(p_frags);
+    (getImplData()).setFormat(p_format);
     return this;
   }
   

@@ -39,6 +39,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -184,8 +185,8 @@ public class ReplicationSource extends Thread
     for (int i = 0; i < this.replicationQueueNbCapacity; i++) {
       this.entriesArray[i] = new HLog.Entry();
     }
-    //this.maxRetriesMultiplier = this.conf.getInt("replication.source.maxretriesmultiplier", 10);
-    //this.socketTimeoutMultiplier = this.conf.getInt("replication.source.socketTimeoutMultiplier", maxRetriesMultiplier * maxRetriesMultiplier);
+    this.maxRetriesMultiplier = this.conf.getInt("replication.source.maxretriesmultiplier", 10);
+    this.socketTimeoutMultiplier = this.conf.getInt("replication.source.socketTimeoutMultiplier", maxRetriesMultiplier * maxRetriesMultiplier);
     this.maxRetriesMultiplier = this.conf.getInt("replication.source.maxretriesmultiplier", 10);
     this.socketTimeoutMultiplier = this.conf.getInt("replication.source.socketTimeoutMultiplier",  maxRetriesMultiplier * maxRetriesMultiplier);
     this.queue =
@@ -732,11 +733,17 @@ public class ReplicationSource extends Thread
   
 
         // +-+-+-+-+-+-+ BEGIN OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
+        String containerId = "";
 
-        Entry[] filteredUpdates = filterEntriesToReplicate(Arrays.copyOf(entriesArray,currentNbEntries));
+        Entry[] filteredUpdates = filterEntriesToReplicate(Arrays.copyOf(entriesArray,currentNbEntries), containerId);
+        
+        //Print contents in cache 
         //System.out.println(cache.toString());
+
+
                 if(filteredUpdates.length > 0) {
                   try {
+                      // Propagate changes now according to QoD constraints in filteredUpdates.
                       getRS().replicateLogEntries(Arrays.copyOf(filteredUpdates, filteredUpdates.length));
                       } catch (IOException e) 
                       {
@@ -744,7 +751,7 @@ public class ReplicationSource extends Thread
                       }
                 }
                 
-        // +-+-+-+-+-+-+ END OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
+        // +-+-+-+-+-+-+    END OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
 
 
         //rrs.replicateLogEntries(Arrays.copyOf(this.entriesArray, currentNbEntries));
@@ -757,6 +764,15 @@ public class ReplicationSource extends Thread
         this.metrics.shippedBatchesRate.inc(1);
         this.metrics.shippedOpsRate.inc(
             this.currentNbOperations);
+
+        // +-+-+-+-+-+-+ BEGIN OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
+          
+          // @author: Alvaro Garcia -> Take shipping timestamp
+                  long now = System.currentTimeMillis();
+                  System.out.println("*** Container: " + containerId + " latest update sent at timestamp : " + this.entriesArray[currentNbEntries-1].getKey().getWriteTime() + " ***\n");
+      
+     // +-+-+-+-+-+-+   END OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
+
         this.metrics.setAgeOfLastShippedOp(
             this.entriesArray[currentNbEntries-1].getKey().getWriteTime());
         LOG.debug("Replicated in total: " + this.totalReplicatedEdits);
@@ -842,7 +858,7 @@ public class ReplicationSource extends Thread
    * @param <updates>
    * @throws IOException
    */
-  private Entry[] filterEntriesToReplicate(HLog.Entry[] updates) {
+  private Entry[] filterEntriesToReplicate(HLog.Entry[] updates, String containerId) {
 
       List<Entry> lst_edits = new ArrayList<HLog.Entry>();
 
@@ -857,7 +873,8 @@ public class ReplicationSource extends Thread
               String colFamily = Bytes.toString(kv.getFamily());
               String qualifier = Bytes.toString(kv.getQualifier());
               String value = Bytes.toString(kv.getValue());
-              String containerId = tableName + HBaseQoD.SEPARATOR + colFamily;
+              containerId = tableName + HBaseQoD.SEPARATOR + colFamily;
+              
               System.out.println("KeyValue (table: " + tableName + ", row: " + row + ", c. family: " + colFamily
                       + ", qualifier: " + qualifier + ", value: " + value + ")");
 
@@ -872,9 +889,15 @@ public class ReplicationSource extends Thread
                   updateBuffer.add(k);
               }
 
+              // Call to the method in HBaseQoD.java. If the method returns true then we propagate:
               if (qod.enforceQoS(containerId)) {
-                  System.out.println("The container of the current KeyValue needs to be replicated \n");
+                  System.out.println("The item" + k + "of the container" + containerId + "will be be replicated \n");
                   newWALEdit.add(kv);
+
+                  // @author: Alvaro Garcia -> Test my own timestamp
+                  //long now = System.currentTimeMillis();
+                  //new Date().getTime();
+                  //System.out.println("*** Container: " + containerId + " is replicated approx. at timestamp:" + now + " ***");
 
                   List<CacheEntry> entries = cache.get(containerId);
                   if (entries != null) {

@@ -67,8 +67,8 @@ public class ReplicationSinkMetrics implements Updater {
    * @param timestamp write time of the edit
    */
   public void setAgeOfLastAppliedOp(long timestamp) {
-    ageOfLastAppliedOp.set(System.currentTimeMillis() - timestamp);
-  }
+	    ageOfLastAppliedOp.set(System.currentTimeMillis() - timestamp);
+	  }
   @Override
   public void doUpdates(MetricsContext metricsContext) {
     synchronized (this) {

@@ -15,15 +15,11 @@ public class TaskMonitorTmplImpl
   implements org.apache.hadoop.hbase.tmpl.common.TaskMonitorTmpl.Intf
 
 {
-  private final String format;
   private final String filter;
   private final TaskMonitor taskMonitor;
+  private final String format;
   protected static org.apache.hadoop.hbase.tmpl.common.TaskMonitorTmpl.ImplData __jamon_setOptionalArguments(org.apache.hadoop.hbase.tmpl.common.TaskMonitorTmpl.ImplData p_implData)
   {
-    if(! p_implData.getFormat__IsNotDefault())
-    {
-      p_implData.setFormat("html");
-    }
     if(! p_implData.getFilter__IsNotDefault())
     {
       p_implData.setFilter("general");
@@ -32,14 +28,18 @@ public class TaskMonitorTmplImpl
     {
       p_implData.setTaskMonitor(TaskMonitor.get());
     }
+    if(! p_implData.getFormat__IsNotDefault())
+    {
+      p_implData.setFormat("html");
+    }
     return p_implData;
   }
   public TaskMonitorTmplImpl(org.jamon.TemplateManager p_templateManager, org.apache.hadoop.hbase.tmpl.common.TaskMonitorTmpl.ImplData p_implData)
   {
     super(p_templateManager, __jamon_setOptionalArguments(p_implData));
-    format = p_implData.getFormat();
     filter = p_implData.getFilter();
     taskMonitor = p_implData.getTaskMonitor();
+    format = p_implData.getFormat();
   }
   
   public void renderNoFlush(@SuppressWarnings({"unused","hiding"}) final java.io.Writer jamonWriter)

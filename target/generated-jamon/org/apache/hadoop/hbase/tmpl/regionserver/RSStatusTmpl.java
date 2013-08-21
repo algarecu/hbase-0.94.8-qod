@@ -35,8 +35,8 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
   requiredArguments = {
     @org.jamon.annotations.Argument(name = "regionServer", type = "HRegionServer")},
   optionalArguments = {
-    @org.jamon.annotations.Argument(name = "filter", type = "String"),
-    @org.jamon.annotations.Argument(name = "format", type = "String")})
+    @org.jamon.annotations.Argument(name = "format", type = "String"),
+    @org.jamon.annotations.Argument(name = "filter", type = "String")})
 public class RSStatusTmpl
   extends org.jamon.AbstractTemplateProxy
 {
@@ -71,23 +71,6 @@ public class RSStatusTmpl
       return m_regionServer;
     }
     private HRegionServer m_regionServer;
-    // 22, 1
-    public void setFilter(String filter)
-    {
-      // 22, 1
-      m_filter = filter;
-      m_filter__IsNotDefault = true;
-    }
-    public String getFilter()
-    {
-      return m_filter;
-    }
-    private String m_filter;
-    public boolean getFilter__IsNotDefault()
-    {
-      return m_filter__IsNotDefault;
-    }
-    private boolean m_filter__IsNotDefault;
     // 23, 1
     public void setFormat(String format)
     {
@@ -105,6 +88,23 @@ public class RSStatusTmpl
       return m_format__IsNotDefault;
     }
     private boolean m_format__IsNotDefault;
+    // 22, 1
+    public void setFilter(String filter)
+    {
+      // 22, 1
+      m_filter = filter;
+      m_filter__IsNotDefault = true;
+    }
+    public String getFilter()
+    {
+      return m_filter;
+    }
+    private String m_filter;
+    public boolean getFilter__IsNotDefault()
+    {
+      return m_filter__IsNotDefault;
+    }
+    private boolean m_filter__IsNotDefault;
   }
   @Override
   protected ImplData makeImplData()
@@ -116,17 +116,17 @@ public class RSStatusTmpl
     return (ImplData) super.getImplData();
   }
   
-  protected String filter;
-  public final org.apache.hadoop.hbase.tmpl.regionserver.RSStatusTmpl setFilter(String p_filter)
-  {
-    (getImplData()).setFilter(p_filter);
-    return this;
-  }
-  
   protected String format;
   public final org.apache.hadoop.hbase.tmpl.regionserver.RSStatusTmpl setFormat(String p_format)
   {
     (getImplData()).setFormat(p_format);
+    return this;
+  }
+  
+  protected String filter;
+  public final org.apache.hadoop.hbase.tmpl.regionserver.RSStatusTmpl setFilter(String p_filter)
+  {
+    (getImplData()).setFilter(p_filter);
     return this;
   }
   
