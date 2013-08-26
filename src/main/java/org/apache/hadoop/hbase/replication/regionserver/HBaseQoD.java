@@ -33,13 +33,21 @@ public class HBaseQoD {
     public HBaseQoD() {
         // TODO Implement empty constructor
         // hardcoded bounds
+
+        // STRONG table bound = 0
+        final String tableName = "usertable";
+        final String columnFamily = "c0";
+
+        // QoD tables WEAK > 0
         final String tableName0 = "usertable0";
         final String tableName1 = "usertable1";
         final String tableName2 = "usertable2";
 
-        final String columnFamily0 = "c0";
-        final String columnFamily1 = "c1";
-        final String columnFamily2 = "c2";
+        final String columnFamily0 = "w0";
+        final String columnFamily1 = "w1";
+        final String columnFamily2 = "w2";
+
+        maxBounds.put(tableName + SEPARATOR + columnFamily, new K(-1, 0, -1));
 
         maxBounds.put(tableName0 + SEPARATOR + columnFamily0, new K(-1, 10, -1));
         maxBounds.put(tableName1 + SEPARATOR + columnFamily1, new K(-1, 50, -1));

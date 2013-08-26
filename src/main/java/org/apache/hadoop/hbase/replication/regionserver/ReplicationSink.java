@@ -139,6 +139,15 @@ public class ReplicationSink {
               put = new Put(kv.getRow());
               put.setClusterId(entry.getKey().getClusterId());
               addToMultiMap(rows, table, put);
+              
+              // +-+-+-+-+-+-+ BEGIN OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
+              
+              // @author: Alvaro Garcia -> Take received timestamp.
+                      //long now = System.currentTimeMillis();
+                      System.out.println("*** Latest item for container: "+table+":"+kv.getRow()+":"+kv.getFamily() + " received at  :\t" + System.currentTimeMillis() + " ***\n");
+          
+              // +-+-+-+-+-+-+   END OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
+              
             }
           }
           if (kv.isDelete()) {
@@ -155,13 +164,7 @@ public class ReplicationSink {
       }
       this.metrics.setAgeOfLastAppliedOp(
               entries[entries.length-1].getKey().getWriteTime());
-      // +-+-+-+-+-+-+ BEGIN OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
       
-      // @author: Alvaro Garcia -> Take received timestamp.
-              //long now = System.currentTimeMillis();
-              System.out.println("*** Latest update for table " + entries[entries.length - 1].getKey().getTablename() + "received at timestamp" + entries[entries.length-1].getKey().getWriteTime() + " ***\n");
-  
-      // +-+-+-+-+-+-+   END OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
 
       
       this.metrics.appliedBatchesRate.inc(1);

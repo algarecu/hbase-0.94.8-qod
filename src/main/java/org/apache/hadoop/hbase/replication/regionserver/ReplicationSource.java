@@ -292,7 +292,7 @@ public class ReplicationSource extends Thread
     List<ServerName> addresses = this.zkHelper.getSlavesAddresses(peerId);
     Set<ServerName> setOfAddr = new HashSet<ServerName>();
     int nbPeers = (int) (Math.ceil(addresses.size() * ratio));
-    LOG.info("Getting " + nbPeers +
+    LOG.debug("Getting " + nbPeers +
         " rs from peer cluster # " + peerId);
     for (int i = 0; i < nbPeers; i++) {
       ServerName sn;
@@ -395,6 +395,7 @@ public class ReplicationSource extends Thread
         continue;
       }
 
+      /* AGR: Something is fishy here, infinite loop in replication if not commenting 3 next lines? */
       boolean gotIOE = false;
       currentNbOperations = 0;
       currentNbEntries = 0;
@@ -733,18 +734,22 @@ public class ReplicationSource extends Thread
   
 
         // +-+-+-+-+-+-+ BEGIN OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
-        String containerId = "";
 
-        Entry[] filteredUpdates = filterEntriesToReplicate(Arrays.copyOf(entriesArray,currentNbEntries), containerId);
+        Entry[] filteredUpdates = filterEntriesToReplicate(Arrays.copyOf(entriesArray,currentNbEntries));
         
         //Print contents in cache 
-        //System.out.println(cache.toString());
+        System.out.println(cache.toString());
 
 
                 if(filteredUpdates.length > 0) {
                   try {
                       // Propagate changes now according to QoD constraints in filteredUpdates.
-                      getRS().replicateLogEntries(Arrays.copyOf(filteredUpdates, filteredUpdates.length));
+
+                      long now = System.currentTimeMillis();
+                      System.out.println("*** Latest update sent at timestamp : " + now + " ***\n");
+      
+                      rrs.replicateLogEntries(Arrays.copyOf(filteredUpdates, filteredUpdates.length));
+                      //getRS().replicateLogEntries(Arrays.copyOf(filteredUpdates, filteredUpdates.length));
                       } catch (IOException e) 
                       {
                               System.out.println("IOEXception caught while replicating: " + e.getStackTrace());
@@ -764,14 +769,6 @@ public class ReplicationSource extends Thread
         this.metrics.shippedBatchesRate.inc(1);
         this.metrics.shippedOpsRate.inc(
             this.currentNbOperations);
-
-        // +-+-+-+-+-+-+ BEGIN OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
-          
-          // @author: Alvaro Garcia -> Take shipping timestamp
-                  long now = System.currentTimeMillis();
-                  System.out.println("*** Container: " + containerId + " latest update sent at timestamp : " + this.entriesArray[currentNbEntries-1].getKey().getWriteTime() + " ***\n");
-      
-     // +-+-+-+-+-+-+   END OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
 
         this.metrics.setAgeOfLastShippedOp(
             this.entriesArray[currentNbEntries-1].getKey().getWriteTime());
@@ -858,7 +855,7 @@ public class ReplicationSource extends Thread
    * @param <updates>
    * @throws IOException
    */
-  private Entry[] filterEntriesToReplicate(HLog.Entry[] updates, String containerId) {
+  private Entry[] filterEntriesToReplicate(HLog.Entry[] updates) {
 
       List<Entry> lst_edits = new ArrayList<HLog.Entry>();
 
@@ -873,7 +870,7 @@ public class ReplicationSource extends Thread
               String colFamily = Bytes.toString(kv.getFamily());
               String qualifier = Bytes.toString(kv.getQualifier());
               String value = Bytes.toString(kv.getValue());
-              containerId = tableName + HBaseQoD.SEPARATOR + colFamily;
+              String containerId = tableName + HBaseQoD.SEPARATOR + colFamily;
               
               System.out.println("KeyValue (table: " + tableName + ", row: " + row + ", c. family: " + colFamily
                       + ", qualifier: " + qualifier + ", value: " + value + ")");
@@ -883,15 +880,15 @@ public class ReplicationSource extends Thread
                if (updateBuffer.contains(k))
                   continue;
 
-              if (updateBuffer.size() >= 100000) {
+              /*if (updateBuffer.size() >= 100000) {
                   updateBuffer.removeFirst();
               } else {
                   updateBuffer.add(k);
-              }
+              }*/
 
               // Call to the method in HBaseQoD.java. If the method returns true then we propagate:
               if (qod.enforceQoS(containerId)) {
-                  System.out.println("The item" + k + "of the container" + containerId + "will be be replicated \n");
+                  System.out.println("Item: \n\t ->" + k +  "will be be replicated.\n");
                   newWALEdit.add(kv);
 
                   // @author: Alvaro Garcia -> Test my own timestamp
@@ -909,7 +906,7 @@ public class ReplicationSource extends Thread
               } else {
 
                   //System.out.println("The container of the current KeyValue need not to be replicated");
-                  cache.put(containerId, new CacheEntry(kv));
+                  //cache.put(containerId, new CacheEntry(kv));
               }
           }
 
