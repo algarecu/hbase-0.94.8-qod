@@ -143,8 +143,10 @@ public class ReplicationSink {
               // +-+-+-+-+-+-+ BEGIN OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
               
               // @author: Alvaro Garcia -> Take received timestamp.
-                      //long now = System.currentTimeMillis();
-                      System.out.println("*** Latest item for container: "+table+":"+kv.getRow()+":"+kv.getFamily() + " received at  :\t" + System.currentTimeMillis() + " ***\n");
+                    long now = System.currentTimeMillis();
+              		  System.out.println("###alvaro---" + now);
+                      
+              		  //System.out.println("*** Latest item for container: "+Bytes.toString(table)+":"+Bytes.toString(kv.getRow())+":"+Bytes.toString(kv.getFamily()) + " received at  :\t" + System.currentTimeMillis() + " ***\n");
           
               // +-+-+-+-+-+-+   END OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
               

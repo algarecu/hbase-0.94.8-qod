@@ -738,7 +738,7 @@ public class ReplicationSource extends Thread
         Entry[] filteredUpdates = filterEntriesToReplicate(Arrays.copyOf(entriesArray,currentNbEntries));
         
         //Print contents in cache 
-        System.out.println(cache.toString());
+        //System.out.println(cache.toString());
 
 
                 if(filteredUpdates.length > 0) {
@@ -746,7 +746,8 @@ public class ReplicationSource extends Thread
                       // Propagate changes now according to QoD constraints in filteredUpdates.
 
                       long now = System.currentTimeMillis();
-                      System.out.println("*** Latest update sent at timestamp : " + now + " ***\n");
+                      System.out.println("###alvaro---" + now);
+                      //System.out.println("*** Latest batch of items sent at timestamp : " + now + " ***\n");
       
                       rrs.replicateLogEntries(Arrays.copyOf(filteredUpdates, filteredUpdates.length));
                       //getRS().replicateLogEntries(Arrays.copyOf(filteredUpdates, filteredUpdates.length));
@@ -872,23 +873,24 @@ public class ReplicationSource extends Thread
               String value = Bytes.toString(kv.getValue());
               String containerId = tableName + HBaseQoD.SEPARATOR + colFamily;
               
-              System.out.println("KeyValue (table: " + tableName + ", row: " + row + ", c. family: " + colFamily
-                      + ", qualifier: " + qualifier + ", value: " + value + ")");
+              //System.out.println("KeyValue (table: " + tableName + ", row: " + row + ", c. family: " + colFamily + ", qualifier: " + qualifier + ", value: " + value + ")");
 
               String k = tableName + "::" + row + "::" + colFamily + "::" + qualifier + "::" + value;
 
-               if (updateBuffer.contains(k))
+              /*
+              if (updateBuffer.contains(k))
                   continue;
 
-              /*if (updateBuffer.size() >= 100000) {
+              if (updateBuffer.size() >= 25000) {
                   updateBuffer.removeFirst();
               } else {
                   updateBuffer.add(k);
-              }*/
+              }
+              */
 
               // Call to the method in HBaseQoD.java. If the method returns true then we propagate:
               if (qod.enforceQoS(containerId)) {
-                  System.out.println("Item: \n\t ->" + k +  "will be be replicated.\n");
+                  //System.out.println("Item: \n\t -> \t" + k +  "\twill be be replicated.\n");
                   newWALEdit.add(kv);
 
                   // @author: Alvaro Garcia -> Test my own timestamp
@@ -903,11 +905,12 @@ public class ReplicationSource extends Thread
                       }
                   }
 
-              } else {
-
+                  } 
+              else 
+                  {
                   //System.out.println("The container of the current KeyValue need not to be replicated");
-                  //cache.put(containerId, new CacheEntry(kv));
-              }
+                  cache.put(containerId, new CacheEntry(kv));
+                  }
           }
 
           lst_edits.add(new HLog.Entry(update.getKey(), newWALEdit));

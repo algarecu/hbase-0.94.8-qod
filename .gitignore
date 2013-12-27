@@ -3,4 +3,15 @@
 .classpath
 .project
 .settings/
-.target
+*.properties
+
+target/
+target/classes/META-INF/DEPENDENCIES
+
+target/antrun/build-main.xml
+
+target/classes/META-INF/DEPENDENCIES
+
+target/copynativelibs.sh
+
+target/maven-archiver/pom.properties
