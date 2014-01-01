@@ -30,14 +30,18 @@ The HBase mailing lists and archives are listed here [8].
 8. http://hbase.apache.org/docs/current/mail-lists.html
 
 
-%********************* HBASE version with QoD (quality-of-data *********************%
+%********************* HBASE version with QoD (quality-of-data) *********************%
 
 This is a HBase version with consistency guarantees built on top of the replication 
 mechanisms of the stable release of HBase 0.94.8.
 
 The Consistency guarantees consist in the following. For each column-family or defined 
-data-container is possible to build a priority-queue based on a three-dimensional vector 
-model K (θ, σ, ν).
+data-container is possible to build a storage priority-queue based on a QoD (quality-of-data) 
+three-dimensional vector model K (θ, σ, ν).
+
+For further information please refer to the full conference paper,
+"Quality-of-Data for Consistency Levels in Geo-replicated Cloud Data Stores"
+Á. García-Recuero, S. Esteves, L. Veiga. IEEE CloudCom 2013, December, Bristol, UK.
 
 P.S. Please note the code is not always properly annotated/commented and the programming 
 style might not follow the Apache Foundation and/or HBase community guidelines at all times. 
