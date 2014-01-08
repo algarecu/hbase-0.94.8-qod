@@ -49,6 +49,10 @@ Use at your own discretion and feel free to propose further contributions/enhanc
 
 Cheers.
 
+Acknowledgements:
+This work is based on the Apache issue 1734 (https://issues.apache.org/jira/browse/HBASE-1734). 
+Thanks to L. Hofhansl for sharing insight knowledge and direction through my initial questions about HBase architecture.
+
 A. García-Recuero.
 algarecu.wordpress.com
 https://www.researchgate.net/profile/Alvaro_Garcia-Recuero/
