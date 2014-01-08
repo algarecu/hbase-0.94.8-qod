@@ -41,9 +41,7 @@ For further information please refer to the full conference paper,
 "Quality-of-Data for Consistency Levels in Geo-replicated Cloud Data Stores"
 Á. García-Recuero, S. Esteves, L. Veiga. IEEE CloudCom 2013, December, Bristol, UK.
 
-P.S. Please note the code is not always properly annotated/commented and the programming 
-style might not follow the Apache Foundation and/or HBase community guidelines at all times. 
-Use at your own discretion and feel free to propose further contributions/enhancements. 
+P.S. Please note the code is not always properly annotated/commented and the programming style might not follow the Apache Foundation and/or HBase community guidelines at all times. Use at your own discretion and feel free to propose further contributions/enhancements. 
 
 Cheers.
 
