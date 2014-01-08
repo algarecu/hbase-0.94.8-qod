@@ -35,9 +35,7 @@ The HBase mailing lists and archives are listed here [8].
 This is a HBase version with consistency guarantees built on top of the replication 
 mechanisms of the stable release of HBase 0.94.8.
 
-The Consistency guarantees consist in the following. For each column-family or defined 
-data-container is possible to build a storage priority-queue based on a QoD (quality-of-data) 
-three-dimensional vector model K (θ, σ, ν).
+The Consistency guarantees consist in the following. For each column-family or defined data-container is possible to build a storage priority-queue based on a QoD (quality-of-data)  three-dimensional vector model K (θ, σ, ν).
 
 For further information please refer to the full conference paper,
 "Quality-of-Data for Consistency Levels in Geo-replicated Cloud Data Stores"
