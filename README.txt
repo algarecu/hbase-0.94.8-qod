@@ -46,7 +46,7 @@ P.S. Please note the code is not always properly annotated/commented and the pro
 Cheers.
 
 Acknowledgements:
-This work is based on the Apache issue 1734 (https://issues.apache.org/jira/browse/HBASE-1734). 
+This work might be applicable to Apache issue 1734 and further work on Storage Consistency Guarantees for cloud data-stores (https://issues.apache.org/jira/browse/HBASE-1734). 
 Thanks to L. Hofhansl for sharing insight knowledge and direction through my initial questions about HBase architecture.
 
 A. García-Recuero.
