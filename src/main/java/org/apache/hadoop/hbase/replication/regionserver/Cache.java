@@ -68,7 +68,7 @@ public class Cache {
     /*
      * (non-Javadoc)
      * 
-     * @Alvaro created this: see java.lang.Object#toString()
+     * @author: alvaro, but see java.lang.Object#toString()
      * 
      * Overriden method to print cache entries
      */

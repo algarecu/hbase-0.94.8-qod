@@ -10,11 +10,11 @@ import org.apache.hadoop.hbase.regionserver.wal.WALEdit;
 
 public class CacheEntry {
 
-    // SROE: remove next 2 lines
+    // remove next 2 lines
     private Put put;
     private Result result;
 
-    // SROE: each CacheEntry contains a HLog entry
+    //  each CacheEntry contains a HLog entry
     private KeyValue edit;
 
 
@@ -34,7 +34,7 @@ public class CacheEntry {
 //        dirty = true;
 //    }
 
-    // SROE: decide later if lastAccessTime/dirty is required
+    // decide later if lastAccessTime/dirty is required
     public CacheEntry(KeyValue entry) {
       this.edit = entry;
     }

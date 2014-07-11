@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-
-// For timestamps of the operation grouping
 import java.util.Date;
 
 public class HBaseQoD {
@@ -34,26 +32,21 @@ public class HBaseQoD {
         // TODO Implement empty constructor
         // hardcoded bounds
 
-        // STRONG table bound = 0
+        // Strong eventual consistency, this is what I want now.
         final String tableName = "usertable";
         final String columnFamily = "c0";
 
-        maxBounds.put(tableName + SEPARATOR + columnFamily, new K(-1, 0, -1));
+        maxBounds.put(tableName + SEPARATOR + columnFamily, new K(-1, 1, -1));
 
-        // QoD tables WEAK > 0
-        final String tableName0 = "usertable0";
-        final String columnFamily0 = "critical";
-        final String columnFamily1 = "noncritical";
-
-        //final String tableName1 = "usertable1";
-        //final String tableName2 = "usertable2";
-
-        //final String columnFamily1 = "w1";
-        //final String columnFamily2 = "w2";
-
-        maxBounds.put(tableName0 + SEPARATOR + columnFamily0, new K(-1, 0, -1));
-        maxBounds.put(tableName0 + SEPARATOR + columnFamily1, new K(-1, 100, -1));
-        //maxBounds.put(tableName2 + SEPARATOR + columnFamily2, new K(-1, 100, -1));
+        // Weaker eventual consistency > QoD (seq) > 1
+        // final String tableNamePriorities = "usertablePriorities";
+        // final String columnFamily0 = "critical";//strong eventual consistency (immediate)
+        // final String columnFamily1 = "noncritical";//non-strong eventual, just upper bounds.
+        
+        // -1 in the vector K means in this case
+        // maxBounds.put(tableNamePriorities + SEPARATOR + columnFamily0, new K(-1, 50, -1));
+        // maxBounds.put(tableNamePriorities + SEPARATOR + columnFamily1, new K(-1, 100, -1));
+        // maxBounds.put(tableName2 + SEPARATOR + columnFamily2, new K(-1, 100, -1));
     }
 
     private Item getItem(String tableName, String columnId) {
@@ -82,9 +75,9 @@ public class HBaseQoD {
     }
 
     
-    /**Method to determine what is replicated
+    /**Method to enforce QoD
      * @param containerId
-     * @return true or false
+     * @return true or false, replicated or not
      */
     public boolean enforceQoS(String containerId) {
 
@@ -119,6 +112,24 @@ public class HBaseQoD {
 
     public double getCacheHitRate() {
         return (double) countCacheHits / (double) countCacheAccesses;
+    }
+    
+    // from http://www.flex-compiler.lcs.mit.edu (credit)
+    public void scheduler(String containerId, int num_threads){
+      // there is only one thread in Replication sources, if not more (EDF init becomes trivial here)
+      
+      
+      // INIT
+      for (int x=0; x< num_threads; x++){
+      // 1. get initial time of thread
+      // 2. initialize absolute deadline ("d") to infinite, so never stops.
+      // 3. amount of work to be completed, processor time received from "d".
+      }
+      
+      // SCHEDULER
+      // implement the earliest deadline first scheduler
+      
+      
     }
 
 }

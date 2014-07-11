@@ -95,7 +95,7 @@ public class ReplicationSource extends Thread
    */
   private static HBaseQoD qod = new HBaseQoD();
   private static Cache cache = new Cache();
-  private static LinkedList<String> updateBuffer = new LinkedList<String>();
+  //private static LinkedList<String> updateBuffer = new LinkedList<String>();
 
   
   // Helper class for zookeeper
@@ -201,7 +201,7 @@ public class ReplicationSource extends Thread
     this.replicating = replicating;
     this.manager = manager;
     this.sleepForRetries =
-        this.conf.getLong("replication.source.sleepforretries", 1000);
+        this.conf.getLong("replication.source.sleepforretries", 1);
     this.fs = fs;
     this.metrics = new ReplicationSourceMetrics(peerClusterZnode);
     this.repLogReader = new ReplicationHLogReaderManager(this.fs, this.conf);

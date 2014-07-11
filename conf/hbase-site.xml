@@ -21,5 +21,70 @@
  * limitations under the License.
  */
 -->
+
 <configuration>
+
+<!--Default each second (1000ms) -->
+<property>
+	<name>replication.source.sleepforretries</name>
+	<value>1000</value>
+</property>
+
+<!-- Default is 64MB -->
+<property>
+	<name>replication.source.size.capacity</name>
+	<value>1024</value>
+</property>
+
+<!--Maximum number of hlog entries to replicate in one go. If this is
+    large, and a consumer takes a while to process the events, the
+    HBase rpc call will time out. -->
+<property>
+	<name>replication.source.nb.capacity</name>
+	<value>1</value>
+</property>
+
+<property>
+    <name>hbase.hregion.max.filesize</name>
+    <value>1610612736</value>
+</property>
+
+<property>
+    <name>hbase.hregion.memstore.flush.size</name>
+    <value>1024</value>
+</property>
+
+<property>
+	<name>hbase.hregion.memstore.block.multiplier</name>
+	<value>1</value>
+</property>
+
+ <property>
+    <name>hbase.hstore.blockingStoreFiles</name>
+    <value>1</value>
+ </property>
+ 
+<property>
+	<name>hbase.hstore.compaction.max</name>
+	<value>1</value>
+</property>
+
+<!-- <property>
+	<name>hbase.regionserver.global.memstore.size</name>
+	<value>1024</value>
+</property> -->
+
+<!-- <property>
+	<name>hbase.hstore.close.check.interval</name>
+	<value></value>
+</property> -->
+
+<!-- Time to sleep in between searches for work (in milliseconds). 
+Used as sleep interval by service threads such as log roller. 
+Default is 10000. Making it 1 second by removing a zero now -->
+<property>
+	<name>hbase.server.thread.wakefrequency</name>
+	<value>1000</value>
+</property>
+
 </configuration>
