@@ -1,6 +1,9 @@
-## Description:
 ### HBase-QoD: hbase 0.94.8 version with Quality-of-Data.
-In short: A knob for tunable eventual-consistency.
+In short: A knob for tunable eventual-consistency in HBase.
+
+## Build Status [![Build Status](https://travis-ci.org/algarecu/hbase-0.94.8-qod.svg?branch=master)](https://travis-ci.org/algarecu/hbase-0.94.8-qod)
+
+## Description:
 
 This is a HBase version with consistency guarantees instrumented within the
 replication mechanisms of the stable release of HBase 0.94.8.
