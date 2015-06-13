@@ -15,9 +15,8 @@ defined data-container is possible to build a storage priority-queue based on a
 QoD (quality-of-data)  three-dimensional vector model K (θ, σ, ν).
 
 To refer to this code or paper, use the full conference title:
-Quality-of-Data for Consistency Levels in Geo-replicated Cloud Data Stores,  
-A. García-Recuero, S. Esteves, L. Veiga. IEEE CloudCom 2013, December, Bristol,
-UK.
+Quality-of-Data for Consistency Levels in Geo-replicated Cloud Data Stores.
+A. García-Recuero, S. Esteves, L. Veiga. IEEE CloudCom 2013, December, Bristol, UK.
 
 P.S. Please note the code is not always properly annotated/commented and the
 programming style might not follow the Apache Foundation and/or HBase community
