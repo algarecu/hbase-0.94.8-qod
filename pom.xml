@@ -2504,7 +2504,7 @@ MAVEN_OPTS=-Xmx2048m mvn clean test -Pclover site -->
         <artifactId>maven-jxr-plugin</artifactId>
         <version>2.1</version>
       </plugin>
-      <!-- Disabled for now
+      <!-- Disabled for now -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>jdepend-maven-plugin</artifactId>
@@ -2542,7 +2542,7 @@ MAVEN_OPTS=-Xmx2048m mvn clean test -Pclover site -->
         <artifactId>maven-dependency-plugin</artifactId>
         <version>2.1</version>
       </plugin>
-      -->
+      <!-- -->
       <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
