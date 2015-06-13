@@ -2,15 +2,12 @@ language: java
 sudo: yes
 sudo_user: root
 file: src=/home/jenkins dest=/home/hudson state=link owner=jenkins group=jenkins
-jdk:
-	- openjdk6
+jdk: openjdk6
 script: mvn clean $MAIN_ARGS
-after_success:
-  - $COVERALLS_ARGS
+after_success: $COVERALLS_ARGS
 branches:
 	only:
 		- master
-
 name: setup user | set umask in .profile
 sudo: yes
 sudo_user: root
