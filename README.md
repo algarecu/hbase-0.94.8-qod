@@ -29,12 +29,12 @@ The HBase mailing lists and archives are listed here [8].
 7. http://hbase.apache.org/docs/current/license.html
 8. http://hbase.apache.org/docs/current/mail-lists.html
 
-
-%***************** HBASE version with QoD (quality-of-data) *****************%
-
+## CI
 [travis-status](https://travis-ci.org/algarecu/hbase-0.94.8-qod.svg?branch=master)
 
 ## Description:
+### HBase-QoD: hbase 0.94.8 version with Quality-of-Data.
+In short: A knob for tunable eventual-consistency.
 
 This is a HBase version with consistency guarantees instrumented within the
 replication mechanisms of the stable release of HBase 0.94.8.
