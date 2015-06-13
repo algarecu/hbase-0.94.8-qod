@@ -1,5 +1,5 @@
 ### HBase-QoD: hbase 0.94.8 version with Quality-of-Data.
-+ In short: A knob for tunable eventual-consistency in HBase.
++ In short: A knob for tuning eventual-consistency in HBase.
 
 [![Join the chat at https://gitter.im/algarecu/hbase-0.94.8-qod](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/algarecu/hbase-0.94.8-qod?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
