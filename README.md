@@ -34,3 +34,7 @@ initial questions about the architecture of HBase.
 ## Contact:
 
 https://www.researchgate.net/profile/Alvaro_Garcia-Recuero/
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/algarecu/hbase-0.94.8-qod/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
