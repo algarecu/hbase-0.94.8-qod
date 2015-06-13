@@ -31,6 +31,7 @@ The HBase mailing lists and archives are listed here [8].
 
 
 %***************** HBASE version with QoD (quality-of-data) *****************%
+https://travis-ci.org/algarecu/hbase-0.94.8-qod.svg?branch=master
 
 ## Description:
 
