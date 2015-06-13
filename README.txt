@@ -32,21 +32,32 @@ The HBase mailing lists and archives are listed here [8].
 
 %***************** HBASE version with QoD (quality-of-data) *****************%
 
-This is a HBase version with consistency guarantees built on top of the replication
-mechanisms of the stable release of HBase 0.94.8.
+## Description:
 
-The Consistency guarantees consist in the following. For each column-family or defined data-container is possible to build a storage priority-queue based on a QoD (quality-of-data)  three-dimensional vector model K (θ, σ, ν).
+This is a HBase version with consistency guarantees instrumented within the
+replication mechanisms of the stable release of HBase 0.94.8.
 
-For further information please refer to the full conference paper,
-"Quality-of-Data for Consistency Levels in Geo-replicated Cloud Data Stores"
-Á. García-Recuero, S. Esteves, L. Veiga. IEEE CloudCom 2013, December, Bristol, UK.
+The Consistency guarantees consist in the following. For each column-family or
+defined data-container is possible to build a storage priority-queue based on a
+QoD (quality-of-data)  three-dimensional vector model K (θ, σ, ν).
 
-P.S. Please note the code is not always properly annotated/commented and the programming style might not follow the Apache Foundation and/or HBase community guidelines at all times. Use at your own discretion and feel free to contact me in order to propose any further contributions/enhancements to the model.
+When using the code please refer to the full conference paper,"Quality-of-Data
+for Consistency Levels in Geo-replicated Cloud Data Stores" Á. García-Recuero,
+S. Esteves, L. Veiga. IEEE CloudCom 2013, December, Bristol, UK.
 
-Acknowledgements:
-This work might be applicable to Apache issue 1734 and further work on Storage Consistency Guarantees for cloud data-stores (https://issues.apache.org/jira/browse/HBASE-1734).
-Thanks to L. Hofhansl for sharing insight knowledge and direction through my initial questions about HBase architecture.
+P.S. Please note the code is not always properly annotated/commented and the
+programming style might not follow the Apache Foundation and/or HBase community
+guidelines at all times. Use at your own discretion and feel free to contact me
+in order to propose any further contributions/enhancements to the model.
 
-A. García-Recuero.
-algarecu.wordpress.com
+## Acknowledgements:
+
+This work might be applicable to Apache issue 1734 and further work on Storage
+Consistency Guarantees for cloud data-stores
+(https://issues.apache.org/jira/browse/HBASE-1734).
+Thanks to L. Hofhansl for sharing insight knowledge and direction through my
+initial questions about the architecture of HBase.
+
+## Contact:
+
 https://www.researchgate.net/profile/Alvaro_Garcia-Recuero/
