@@ -60,6 +60,3 @@ initial questions about the architecture of HBase.
 ## Contact:
 
 https://www.researchgate.net/profile/Alvaro_Garcia-Recuero/
-
-## Build Status
-[![Build Status](https://travis-ci.org/algarecu/hbase-0.94.8-qod.svg?branch=master)](https://travis-ci.org/algarecu/hbase-0.94.8-qod)
