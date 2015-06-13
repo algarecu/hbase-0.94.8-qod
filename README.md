@@ -61,5 +61,5 @@ initial questions about the architecture of HBase.
 
 https://www.researchgate.net/profile/Alvaro_Garcia-Recuero/
 
-## CI
+## Travis-Ci
 [![Build Status](https://travis-ci.org/algarecu/hbase-0.94.8-qod.svg?branch=master)](https://travis-ci.org/algarecu/hbase-0.94.8-qod)
