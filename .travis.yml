@@ -1,1 +1,12 @@
 language: java
+sudo: true
+
+jdk:
+	- openjdk6
+script:
+	script: mvn clean $MAIN_ARGS
+after_success:
+  - $COVERALLS_ARGS
+branches:
+	only:
+		- master
