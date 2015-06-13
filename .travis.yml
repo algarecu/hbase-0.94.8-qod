@@ -1,3 +1,9 @@
+---
+  - include: tasks/setup_user.yml
+  - include: tasks/install_tools.yml
+  - include: tasks/update_configs.yml
+  - include: tasks/update_etc_hosts.yml
+
 language: java
 sudo: yes
 sudo_user: root
@@ -8,9 +14,3 @@ after_success: $COVERALLS_ARGS
 branches:
 	only:
 		- master
-name: setup user | set umask in .profile
-sudo: yes
-sudo_user: root
-lineinfile: dest=/home/jenkins/.profile
-line="umask 022"
-state=present

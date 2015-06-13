@@ -1,0 +1,52 @@
+---
+  - name: setup_user | jenkins group
+    sudo: yes
+    sudo_user: root
+    group: name="jenkins" state=present
+
+  - name: setup user | jenkins user
+    sudo: yes
+    sudo_user: root
+    user: name="jenkins" comment="Jenkins Slave"
+          shell="/bin/bash" group=jenkins
+          groups=sshusers
+          password={{pass_word}}
+    when: setup_password
+
+  - name: setup user | setup authorized_keys
+    sudo: yes
+    sudo_user: root
+    authorized_key: user=jenkins
+        manage_dir=no
+        path=/etc/ssh/ssh_keys/services/jenkins.pub
+        key="{{master_key_file}}"
+    when: setup_master_key
+    tags: setup_master_key
+
+  - name: setup user | jekins user | symlink pub key
+    sudo: yes
+    sudo_user: root
+    file: src=/etc/ssh/ssh_keys/services/jenkins.pub
+          dest=/etc/ssh/ssh_keys/jenkins.pub
+          state=link
+    when: setup_master_key
+    tags: setup_master_key
+
+  - name: setup user | ssh dir and m2 dir + hudson symlink
+    sudo: yes
+    sudo_user: jenkins
+    file: path={{ssh_dir}} state=directory mode=700
+    file: path={{m2_cache_dir}} state=directory mode=755
+    tags: setup_master_key
+
+  - name: setup user | ssh dir and m2 dir + hudson symlink
+    sudo: yes
+    sudo_user: root
+    file: src=/home/jenkins dest=/home/hudson state=link owner=jenkins group=jenkins
+
+  - name: setup user | set umask in .profile
+    sudo: yes
+    sudo_user: root
+    lineinfile: dest=/home/jenkins/.profile
+                line="umask 022"
+                state=present

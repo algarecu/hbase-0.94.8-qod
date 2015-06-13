@@ -1,0 +1,35 @@
+---
+  - name: update_configs | limits.conf
+    sudo: yes
+    sudo_user: root
+    copy: src=limits.conf dest=/etc/security/limits.conf
+    tags: update_configs
+
+  - name: update_configs | /etc/pam.d/common-session
+    sudo: yes
+    sudo_user: root
+    copy: src=common-session dest=/etc/pam.d/common-session
+    tags: update_configs
+
+  - name: update_configs | settings.xml
+    sudo: yes
+    sudo_user: jenkins
+    template: src=m2_settings.j2 dest={{m2_cache_dir}}/settings.xml
+               owner=jenkins group=jenkins
+    when: m2_settings
+    tags: update_configs
+
+  - name: update_configs | sshd_config
+    sudo: yes
+    sudo_user: root
+    lineinfile: dest=/etc/ssh/sshd_config
+                regexp="^UsePAM\s+no"
+                line="UsePAM                          yes"
+                state=present
+    tags: update_configs
+
+  - name: update_configs | sshd restart
+    sudo: yes
+    sudo_user: root
+    service: name=ssh state=restarted
+    tags: update_configs
