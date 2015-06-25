@@ -47,6 +47,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HConstants;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.ServerName;
@@ -54,6 +55,7 @@ import org.apache.hadoop.hbase.Stoppable;
 import org.apache.hadoop.hbase.TableNotFoundException;
 import org.apache.hadoop.hbase.client.HConnection;
 import org.apache.hadoop.hbase.client.HConnectionManager;
+import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.ipc.HRegionInterface;
 import org.apache.hadoop.hbase.regionserver.wal.HLog;
 import org.apache.hadoop.hbase.regionserver.wal.HLog.Entry;
@@ -82,21 +84,19 @@ public class ReplicationSource extends Thread
     implements ReplicationSourceInterface {
 
   private static final Log LOG = LogFactory.getLog(ReplicationSource.class);
+  
   // Queue of logs to process
   private PriorityBlockingQueue<Path> queue;
+  
   // container of entries to replicate
   private HLog.Entry[] entriesArray;
   private HConnection conn;
-    
+  
   /*
-   * AG: Above entriesArray is the existing container of entries to replicate
-   * -> entriesArray Instance of QoD -> qod New queue of filteredEntries ->
-   * filterdUpdates
+   * QoD instance
    */
   private static HBaseQoD qod = new HBaseQoD();
   private static Cache cache = new Cache();
-  //private static LinkedList<String> updateBuffer = new LinkedList<String>();
-
   
   // Helper class for zookeeper
   private ReplicationZookeeper zkHelper;
@@ -155,6 +155,15 @@ public class ReplicationSource extends Thread
   private ReplicationSourceMetrics metrics;
   // Handle on the log reader helper
   private ReplicationHLogReaderManager repLogReader;
+  
+  // SEP change - The time when the list of sinks was last read
+  private volatile long sinkListReadTimetamp;
+
+  // SEP change - The time when the list of sinks was last changed in ZooKeeper
+  private volatile long sinkListUpdateTimestamp;
+
+  // SEP change
+  private ReplicationSourceInfo infoMBean;
 
 
   /**
@@ -720,6 +729,14 @@ public class ReplicationSource extends Thread
       LOG.warn("Was given 0 edits to ship");
       return;
     }
+    
+    // SEP change - if the peer regionserver list has been updated in ZooKeeper more recently than
+    // the last time we read it, we re-read the list of available replication peers
+    if (sinkListUpdateTimestamp > sinkListReadTimetamp) {
+      LOG.info("List of peer regionservers changed in ZooKeeper, re-choosing replication sinks");
+      chooseSinks();
+             }
+    
     while (this.isActive()) {
       if (!isPeerEnabled()) {
         if (sleepForRetries("Replication is disabled", sleepMultiplier)) {
@@ -733,31 +750,25 @@ public class ReplicationSource extends Thread
 
   
 
-        // +-+-+-+-+-+-+ BEGIN OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
+        /** Above entriesArray is the existing container of entries to replicate
+        * entriesArray.
+        * Accept instance of QoD: queue of filteredEntries
+        * Return filterdUpdates
+        * */
+        Entry[] filteredUpdates = filterEntriesToReplicate(
+          Arrays.copyOf(entriesArray,currentNbEntries));
 
-        Entry[] filteredUpdates = filterEntriesToReplicate(Arrays.copyOf(entriesArray,currentNbEntries));
-        
-        //Print contents in cache 
-        //System.out.println(cache.toString());
-
-
-                if(filteredUpdates.length > 0) {
-                  try {
-                      // Propagate changes now according to QoD constraints in filteredUpdates.
-
-                      long now = System.currentTimeMillis();
-                      System.out.println("###alvaro---" + now);
-                      //System.out.println("*** Latest batch of items sent at timestamp : " + now + " ***\n");
-      
-                      rrs.replicateLogEntries(Arrays.copyOf(filteredUpdates, filteredUpdates.length));
-                      //getRS().replicateLogEntries(Arrays.copyOf(filteredUpdates, filteredUpdates.length));
-                      } catch (IOException e) 
-                      {
-                              System.out.println("IOEXception caught while replicating: " + e.getStackTrace());
-                      }
-                }
-                
-        // +-+-+-+-+-+-+    END OF VFC3 CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
+        if(filteredUpdates.length > 0) {
+          try {
+            // Propagate filteredUpdates according to QoD.
+            rrs.replicateLogEntries(Arrays.copyOf(filteredUpdates, filteredUpdates.length));
+          } catch (IOException e) 
+          {
+            System.out.println("IOEXception caught while replicating: " + 
+          e.getStackTrace());
+          }
+        }     
+        // +-+-+-+-+-+-+    END OF CHANGES +-+-+-+-+-+-+-+-+-+-+-+-+
 
 
         //rrs.replicateLogEntries(Arrays.copyOf(this.entriesArray, currentNbEntries));
@@ -826,8 +837,8 @@ public class ReplicationSource extends Thread
   }
   
   /**
-   * A.G: Print the entries returned as ROW, FAMILY AND VALUE.
-   * 
+   * HBase-QoD addition: Print the entries returned as ROW, FAMILY AND VALUE.
+   * @author agarciar
    * @param entries
    * @return
    */

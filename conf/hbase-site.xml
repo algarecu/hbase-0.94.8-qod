@@ -87,4 +87,21 @@ Default is 10000. Making it 1 second by removing a zero now -->
 	<value>1000</value>
 </property>
 
+<!--QoD configs -->
+
+<property>
+	<name>hbase.qod.tablename</name>
+	<value>usertable0</value>
+</property>
+
+<property>
+	<name>hbase.qod.columnFamily</name>
+	<value>c0</value>
+</property>
+
+<property>
+	<name>hbase.qod.sequence</name>
+	<value>10</value>
+</property>
+
 </configuration>

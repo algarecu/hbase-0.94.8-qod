@@ -40,9 +40,10 @@ package org.apache.hadoop.hbase.replication.regionserver;
 	    }
 
 	    public void reset() {
+          this.time = -1;
 	        this.sequence = 0;
 	        this.value = -1;
-	        this.time = -1;
+
 	    }
 
 	    @Override

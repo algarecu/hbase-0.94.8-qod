@@ -4,35 +4,19 @@ import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 
-// SROE:
 import org.apache.hadoop.hbase.regionserver.wal.HLog.Entry;
 import org.apache.hadoop.hbase.regionserver.wal.WALEdit;
 
 public class CacheEntry {
 
-    // remove next 2 lines
+    // remove next 2 lines ?
     private Put put;
     private Result result;
 
-    //  each CacheEntry contains a HLog entry
+    // each CacheEntry contains a HLog entry
     private KeyValue edit;
-
-
-
     private boolean dirty;
     private long lastAccessTime;
-
-//    public CacheEntry(Result result, long lastAccessTime) {
-//        this.result = result;
-//        this.lastAccessTime = lastAccessTime;
-//        dirty = false;
-//    }
-//
-//    public CacheEntry(Put put, long lastAccessTime) {
-//        this.put = put;
-//        this.lastAccessTime = lastAccessTime;
-//        dirty = true;
-//    }
 
     // decide later if lastAccessTime/dirty is required
     public CacheEntry(KeyValue entry) {

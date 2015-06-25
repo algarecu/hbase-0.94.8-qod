@@ -174,8 +174,8 @@ public class HTable implements HTableInterface {
   }
 
   /**
-   * Creates an object to access a HBase table.
-   * Shares zookeeper connection and other resources with other HTable instances
+   * Creates an object to access an HBase table.
+   * Shares Zookeeper connection and other resources with other HTable instances
    * created with the same <code>conf</code> instance.  Uses already-populated
    * region cache if one is available, populated by any other HTable instances
    * sharing this <code>conf</code> instance.
@@ -270,7 +270,7 @@ public class HTable implements HTableInterface {
   }
 
   /**
-   * Tells whether or not a table is enabled or not. This method creates a
+   * Tells whether a table is enabled or not. This method creates a
    * new HBase configuration, so it might make your unit tests fail due to
    * incorrect ZK client port.
    * @param tableName Name of table to check.

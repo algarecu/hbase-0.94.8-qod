@@ -13,30 +13,17 @@ import org.apache.hadoop.hbase.regionserver.wal.HLog.Entry;
 import org.apache.hadoop.hbase.regionserver.wal.WALEdit;
 import org.apache.hadoop.hbase.util.Bytes;
 
-//import com.yahoo.ycsb.Client;
-
 /**
  * This Cache should allocate memory through Direct ByteByffers, available in the java.nio package. This avoids the garbage collector
  * overhead that impacts performance.
- * 
- */
-/**
- * @author algarecu
  * 
  */
 public class Cache {
 
     private int size = 1000;
     private int maxElementsToEvict = 500;
-
-    // stores (table, row)->CacheEntry
-    // private static Map<String, Map<String, CacheEntry>> tables = new ConcurrentHashMap<String, Map<String, CacheEntry>>();
-
-    // SROE: maps data_container_id -> CacheEntry_List
     private Map<String, List<CacheEntry>> cache = new ConcurrentHashMap<String, List<CacheEntry>>();
-
     private Map<Long, String> lastAccessTime = Collections.synchronizedMap(new TreeMap<Long, String>());
-
 
     private void evictElems(Map<String, CacheEntry> table) {
         int countEvicts = maxElementsToEvict;
@@ -68,7 +55,7 @@ public class Cache {
     /*
      * (non-Javadoc)
      * 
-     * @author: alvaro, but see java.lang.Object#toString()
+     * @author: see java.lang.Object#toString()
      * 
      * Overriden method to print cache entries
      */
@@ -95,7 +82,7 @@ public class Cache {
         return str;
     }
 
-    // A.G: what I return when I want to get an entry
+    // What I return when I want to get an entry
     /**
      * This is a method to get the mapping to that container key.
      * 
