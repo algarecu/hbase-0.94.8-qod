@@ -1,3 +1,4 @@
 language: java
 jdk: openjdk6
-script: umask 0022 && mvn test
+before_install: umask 0022
+script: mvn test -P runDevTests
