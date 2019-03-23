@@ -5,13 +5,13 @@ install:
   # TLS 1.2 only but OpenJDK 6 does not.
   - export ORIGINAL_JAVA_HOME=$JAVA_HOME
   - jdk_switcher use oraclejdk8
-  - ./mvn test -DskipTests
+  - mvn test -DskipTests
   # Delete all files created with JDK 8
-  - ./mvn clean
+  - mvn clean
   # Restore desired JDK
   - export JAVA_HOME=$ORIGINAL_JAVA_HOME
   # Run original install command but without GPG signing
-  - ./mvn install -DskipTests
+  - mvn install -DskipTests
 
 jdk:
   - openjdk7
