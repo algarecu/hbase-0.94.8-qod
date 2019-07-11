@@ -14,9 +14,10 @@ install:
   - mvn install -DskipTests
 
 jdk:
+  - openjdk6
   - openjdk7
-  - oraclejdk8
-  - oraclejdk9
+  - openjdk8
+  - openjdk9
   - openjdk10
 
 before_install: umask 0022
