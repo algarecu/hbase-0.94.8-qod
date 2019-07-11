@@ -3,7 +3,7 @@
 
 <!--[![Join the chat at https://gitter.im/algarecu/hbase-0.94.8-qod](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/algarecu/hbase-0.94.8-qod?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)-->
 
-## Build Status [![Build Status](https://travis-ci.org/algarecu/hbase-0.94.8-qod.svg?branch=master)](https://travis-ci.org/algarecu/hbase-0.94.8-qod)
+<!-- ## Build Status [![Build Status](https://travis-ci.org/algarecu/hbase-0.94.8-qod.svg?branch=master)](https://travis-ci.org/algarecu/hbase-0.94.8-qod)-->
 
 ## Description:
 
