@@ -1,4 +1,4 @@
-### HBaseQoD: hbase 0.94.8 with Quality-of-Data.
+### HBase-QoD: hbase 0.94.8 with Quality-of-Data.
 + In short: eventual-consistency with transactional operation grouping for inter-DC replication in HBase.
 
 <!--[![Join the chat at https://gitter.im/algarecu/hbase-0.94.8-qod](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/algarecu/hbase-0.94.8-qod?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)-->
