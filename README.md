@@ -31,6 +31,9 @@ Consistency Guarantees for cloud data-stores
 Thanks to L. Hofhansl for sharing insight knowledge and direction through my
 initial questions about the architecture of HBase.
 
+## License: 
+Apache License 2.0 applies as this is open source software. In addition, our research papers above will now be licensed under a BY-NC-ND license (Attribution-NonCommercial-No Derivatives) http://creativecommons.org/licenses/by-nc-nd/3.0/.
+
 ## Contact:
 
 https://www.researchgate.net/profile/Alvaro_Garcia-Recuero/
