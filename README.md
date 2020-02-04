@@ -1,6 +1,6 @@
 ### HBase-QoD: hbase 0.94.8 with Quality-of-Data.
 + In short: eventual-consistency with transactional operation grouping for inter-DC replication in HBase.
-+ This repo is listed and caterogized accordingly here for HBase projects: 
++ This repo is listed and caterogized accordingly to the type of HBase project here: 
 https://github.com/rayokota/awesome-hbase
 
 <!--[![Join the chat at https://gitter.im/algarecu/hbase-0.94.8-qod](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/algarecu/hbase-0.94.8-qod?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)-->
@@ -8,7 +8,6 @@ https://github.com/rayokota/awesome-hbase
 <!-- ## Build Status [![Build Status](https://travis-ci.org/algarecu/hbase-0.94.8-qod.svg?branch=master)](https://travis-ci.org/algarecu/hbase-0.94.8-qod)-->
 
 ## Description:
-
 This is a HBase version with consistency guarantees instrumented within the
 replication mechanisms of the stable release of HBase 0.94.8.
 
@@ -26,7 +25,6 @@ guidelines at all times. Use at your own discretion and feel free to contact me
 in order to propose any further contributions/enhancements to the model.
 
 ## Acknowledgements:
-
 This work might be applicable to Apache issue 1734 and further work on Storage
 Consistency Guarantees for cloud data-stores
 (https://issues.apache.org/jira/browse/HBASE-1734).
@@ -37,6 +35,5 @@ initial questions about the architecture of HBase.
 Apache License 2.0 applies as this is open source software. In addition, our research papers above will now be licensed under a BY-NC-ND license (Attribution-NonCommercial-No Derivatives) http://creativecommons.org/licenses/by-nc-nd/3.0/.
 
 ## Contact:
-
 https://www.researchgate.net/profile/Alvaro_Garcia-Recuero/
 
